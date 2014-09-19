@@ -1,4 +1,4 @@
-kantar_demo
+kantar_app
 ===========
 
-This is a repository for kantar_demo website files
+This is a repository for kantar_app which is developed in Drupal7.
