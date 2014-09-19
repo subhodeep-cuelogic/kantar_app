@@ -1,0 +1,26 @@
+.logo_width {
+	width:30% !important;
+}
+.mainmenu_width {
+	width:70% !important;
+}
+
+.image-align {
+	
+	float: left;
+    padding-right: 20px;
+    
+}
+
+.news-title {
+	clear:both;
+}
+
+.toggle{
+ display:inline-block;
+height:48px;
+width:48px;  background:url("http://icons.iconarchive.com/icons/pixelmixer/basic/48/plus-icon.png");
+}
+.toggle.expanded{
+  background:url("http://cdn2.iconfinder.com/data/icons/onebit/PNG/onebit_32.png");
+}

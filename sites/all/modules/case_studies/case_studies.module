@@ -1,0 +1,69 @@
+<?php
+/**
+* Function implementing the hooks_menu()
+*/
+  
+function case_studies_menu()
+{
+    $items = array();
+    $items['all-case-studies'] = array(
+        'title'            => 'Case Studies',
+        'description'      => 'Show All Case Studies',
+        'page callback'    => 'fnShowAllCaseStudies',
+        'access callback'  => TRUE,
+    );
+
+    
+    return $items;
+}
+
+
+
+function fnShowAllCaseStudies()
+{
+   
+ 
+
+    //include necessary file
+    module_load_include('inc', 'case_studies', 'inc/casestudies');
+
+    //Create the object of class
+    $objCaseStudies = new CaseStudies();
+    
+    //function to get the case studies list
+    $arrCaseStudiesList = $objCaseStudies->fnShowCaseStudiesListing();
+
+    //echo "<pre>";print_r($arrCaseStudiesList);die;
+   
+    /*Set the page title*/
+    drupal_set_title("Case Studies List");
+    
+    //Include custom css
+    drupal_add_css(drupal_get_path('theme', 'kantar'). '/kantar_custom.css');
+    
+   
+   
+    // Template variables
+    $arrCaseStudiesListData = array("arrCaseStudiesList" => $arrCaseStudiesList
+                         );
+
+    return theme('case_studies_listing', $arrCaseStudiesListData);
+}
+
+/**
+ * Call Inbuilt hook theme to use templates
+ */
+function case_studies_theme()
+{
+    $themes = array(
+         'case_studies_listing' => array(
+            'template' => 'templates/case_studies_listing',
+        ),
+       
+    );
+    return $themes;
+}
+
+
+
+?>

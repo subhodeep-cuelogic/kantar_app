@@ -1,0 +1,6 @@
+name = Case Studies
+description = This is a custom module developed for case studies
+package = Case Studies Details
+core = 7.x
+version = 7.x - 1.x
+files[] = case_studies.module
