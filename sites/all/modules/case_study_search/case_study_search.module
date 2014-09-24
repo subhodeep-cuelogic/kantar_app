@@ -1,0 +1,31 @@
+<?php
+/**
+* @file
+* myblock.module
+*/
+
+function case_study_search_block_info() {
+  $blocks['case_study_search'] = array(
+    'info' => t('Case Studies Search Block'),
+    // DRUPAL_CACHE_PER_ROLE will be assumed.
+  );
+
+  return $blocks;
+}
+
+function case_study_search_block_view($delta = '') {
+  // This example is adapted from node.module.
+  $block = array();
+
+  switch ($delta) {
+    case 'case_study_search':
+      $block['subject'] = t('Search Case Studies');
+      //$block['content'] = "<strong>My Block</strong>";
+      $block['content'] = "<form id='CaseStudySearchfrm' name='CaseStudySearchfrm' ><input type='text' name='title'></form>";
+      break;
+
+  }
+  return $block;
+}
+
+?>

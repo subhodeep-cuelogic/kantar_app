@@ -1,0 +1,75 @@
+<?php
+/**
+* @file
+* myblock.module
+*/
+
+function case_study_tags_filter_block_info() {
+  $blocks['case_study_tags_filter'] = array(
+    'info' => t('Case Study Tags Filter'),
+    // DRUPAL_CACHE_PER_ROLE will be assumed.
+  );
+
+  return $blocks;
+}
+
+function case_study_tags_filter_block_view($delta = '') {
+  // This example is adapted from node.module.
+  $block = array();
+
+  switch ($delta) {
+    case 'case_study_tags_filter':
+      $block['subject'] = t('Filter Case Studies Tags');
+      //$block['content'] = "<strong>My Block</strong>";
+      $block['content'] = fnGetAllTaxonomyList();
+      break;
+
+  }
+  return $block;
+}
+
+function fnGetAllTaxonomyList()
+{
+    //include necessary file
+    module_load_include('inc', 'case_study_tags_filter', 'inc/taxonomyinfo');
+
+    //echo "Hello";die;
+
+    //Create the object of class
+    $objTaxonomyInfo = new TaxonomyInfo();
+    
+    //function to get the case studies list
+    $arrTaxonomyList = $objTaxonomyInfo->fnShowTaxonomyListing();
+
+    //echo "<pre>";print_r($arrTaxonomyList);die;
+   
+    /*Set the page title*/
+    //drupal_set_title("Filter");
+    
+    //Include custom css
+    
+    //drupal_add_js(drupal_get_path('module', 'case_study_tags_filter') . '/js/filter.js');
+    
+   
+   
+    // Template variables
+    $arrCaseStudiesTaxonomyData = array("arrTaxonomyList" => $arrTaxonomyList
+                         );
+
+    return theme('case_study_tags_filter', $arrCaseStudiesTaxonomyData);
+}
+
+/**
+ * Call Inbuilt hook theme to use templates
+ */
+function case_study_tags_filter_theme()
+{
+    $themes = array(
+         'case_study_tags_filter' => array(
+            'template' => 'templates/case_study_tags_filter',
+        ),
+    );
+    return $themes;
+}
+
+?>

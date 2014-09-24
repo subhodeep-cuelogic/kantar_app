@@ -1,0 +1,75 @@
+<?php
+/**
+* @file
+* myblock.module
+*/
+
+function news_tags_filter_block_info() {
+  $blocks['news_tags_filter'] = array(
+    'info' => t('Filter News'),
+    // DRUPAL_CACHE_PER_ROLE will be assumed.
+  );
+
+  return $blocks;
+}
+
+function news_tags_filter_block_view($delta = '') {
+  // This example is adapted from node.module.
+  $block = array();
+
+  switch ($delta) {
+    case 'news_tags_filter':
+      $block['subject'] = t('This is my News filter block');
+      //$block['content'] = "<strong>My Block</strong>";
+      $block['content'] = fnGetAllNewsTaxonomyList();
+      break;
+
+  }
+  return $block;
+}
+
+function fnGetAllNewsTaxonomyList()
+{
+    //include necessary file
+    module_load_include('inc', 'news_tags_filter', 'inc/newstaxonomyinfo');
+
+    //echo "Hello";die;
+
+    //Create the object of class
+    $objTaxonomyInfo = new NewsTaxonomyInfo();
+    
+    //function to get the case studies list
+    $arrTaxonomyList = $objTaxonomyInfo->fnShowTaxonomyListing();
+
+    //echo "<pre>";print_r($arrTaxonomyList);die;
+   
+    /*Set the page title*/
+    //drupal_set_title("Filter");
+    
+    //Include custom css
+    
+    //drupal_add_js(drupal_get_path('module', 'news_tags_filter') . '/js/filter.js');
+    
+   
+   
+    // Template variables
+    $arrCaseStudiesTaxonomyData = array("arrTaxonomyList" => $arrTaxonomyList
+                         );
+
+    return theme('news_tags_filter', $arrCaseStudiesTaxonomyData);
+}
+
+/**
+ * Call Inbuilt hook theme to use templates
+ */
+function news_tags_filter_theme()
+{
+    $themes = array(
+         'news_tags_filter' => array(
+            'template' => 'templates/news_tags_filter',
+        ),
+    );
+    return $themes;
+}
+
+?>

@@ -1,0 +1,5 @@
+name = News Tags Filtration Block
+description = Creates a News Tags Filtration Block
+package = News Tags Filtration
+core = 7.x
+version = 7.x-1.0
