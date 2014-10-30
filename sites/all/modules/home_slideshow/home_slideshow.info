@@ -1,0 +1,5 @@
+name = Home Slideshow
+description = Creates a Slideshow for Home Page
+package = Slideshow
+core = 7.x
+version = 7.x-1.0

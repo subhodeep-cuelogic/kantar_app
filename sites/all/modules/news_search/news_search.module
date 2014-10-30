@@ -1,0 +1,31 @@
+<?php
+/**
+* @file
+* myblock.module
+*/
+
+function news_search_block_info() {
+  $blocks['news_search'] = array(
+    'info' => t('News Search Block'),
+    // DRUPAL_CACHE_PER_ROLE will be assumed.
+  );
+
+  return $blocks;
+}
+
+function news_search_block_view($delta = '') {
+  // This example is adapted from node.module.
+  $block = array();
+
+  switch ($delta) {
+    case 'news_search':
+      $block['subject'] = t('Search News');
+      //$block['content'] = "<strong>My Block</strong>";
+      $block['content'] = "<form id='NewsSearchfrm' name='NewsSearchfrm' ><input type='text' name='title'></form>";
+      break;
+
+  }
+  return $block;
+}
+
+?>

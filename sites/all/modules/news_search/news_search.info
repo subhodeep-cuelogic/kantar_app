@@ -1,0 +1,5 @@
+name = Search News
+description = Creates a search news functionality
+package = News Tags Filtration
+core = 7.x
+version = 7.x-1.0

@@ -24,3 +24,27 @@ width:48px;  background:url("http://icons.iconarchive.com/icons/pixelmixer/basic
 .toggle.expanded{
   background:url("http://cdn2.iconfinder.com/data/icons/onebit/PNG/onebit_32.png");
 }
+
+.leader_image {
+
+	float:left;
+	padding-right: 10px;
+}
+.views-row {
+ clear:both;
+}
+
+.field-item {
+	float:left;
+
+}
+.sharethis-buttons {
+	 text-align: right;
+}
+.field-label {
+	padding-bottom: 05px;
+	padding-top: 10px;
+}
+h1.page-title {
+	border-bottom: 1px solid #FF9900;
+}

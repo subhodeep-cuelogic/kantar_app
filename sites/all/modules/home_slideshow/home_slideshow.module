@@ -1,0 +1,66 @@
+<?php
+/**
+* @file
+* home_slideshow.module
+*/
+
+function home_slideshow_block_info() {
+  $blocks['home_slideshow'] = array(
+    'info' => t('Home Slideshow'),
+    // DRUPAL_CACHE_PER_ROLE will be assumed.
+  );
+
+  return $blocks;
+}
+
+function home_slideshow_block_view($delta = '') {
+  // This example is adapted from node.module.
+  $block = array();
+
+  switch ($delta) {
+    case 'home_slideshow':
+      $block['subject'] = t('');
+      $block['content'] = fnGetAllSlideshowDetails();
+      break;
+
+  }
+  return $block;
+}
+
+function fnGetAllSlideshowDetails()
+{
+    
+    $type = "home_slideshow";
+    $nodes = node_load_multiple(array(), array('type' => $type));
+    $i=0;
+    foreach($nodes as $slideshows) {
+    	$arrHomeSlideshowList[$i]['title'] = $slideshows->title;
+    	$arrHomeSlideshowList[$i]['bg_colr'] = $slideshows->field_slider_background_color['und'][0]['value'];
+    	$arrHomeSlideshowList[$i]['image_name'] = $slideshows->field_slide_image['und'][0]['filename'];
+    	$arrHomeSlideshowList[$i]['image_alt'] = $slideshows->field_slide_image['und'][0]['alt'];
+    	$arrHomeSlideshowList[$i]['caption'] = $slideshows->field_slide_caption['und'][0]['value'];
+    	$arrHomeSlideshowList[$i]['target_url'] = $slideshows->field_slide_target_url['und'][0]['value'];
+    	$i++;
+    }    
+
+    // Template variables
+    $arrHomeSlideshowData = array("arrHomeSlideshowList" => $arrHomeSlideshowList
+                         );
+
+    return theme('home_slideshow', $arrHomeSlideshowData);
+}
+
+/**
+ * Call Inbuilt hook theme to use templates
+ */
+function home_slideshow_theme()
+{
+    $themes = array(
+         'home_slideshow' => array(
+            'template' => 'templates/home_slideshow',
+        ),
+    );
+    return $themes;
+}
+
+?>
