@@ -1,0 +1,5 @@
+name = Case Study Product Filter
+description = Creates a Case Study Product Filter Block
+package = Case Studies Filtration
+core = 7.x
+version = 7.x-1.0

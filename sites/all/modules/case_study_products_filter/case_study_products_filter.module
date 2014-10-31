@@ -1,0 +1,60 @@
+<?php
+/**
+* @file
+* case_study_products_filter.module
+*/
+
+function case_study_products_filter_block_info() {
+  $blocks['case_study_products_filter'] = array(
+    'info' => t('Case Study Products Filter'),
+    // DRUPAL_CACHE_PER_ROLE will be assumed.
+  );
+
+  return $blocks;
+}
+
+function case_study_products_filter_block_view($delta = '') {
+  // This example is adapted from node.module.
+  $block = array();
+
+  switch ($delta) {
+    case 'case_study_products_filter':
+      $block['subject'] = t('Filter Case Studies On Products');
+      $block['content'] = fnGetProductCatList();
+      break;
+
+  }
+  return $block;
+}
+
+function fnGetProductCatList()
+{
+    //include necessary file
+    module_load_include('inc', 'case_study_products_filter', 'inc/productcategory');
+    //Create the object of class
+    $objProductCat = new ProductCategory();
+    //function to get the product categories 
+    $arrProductCatList = $objProductCat->fnGetProductCatList();
+
+    //echo "<pre>";print_r($arrProductCatList);die;
+   
+    // Template variables
+    $arrProductCatData = array("arrProductCatList" => $arrProductCatList);
+
+    return theme('case_study_products_filter', $arrProductCatData);
+}
+
+/**
+ * Call Inbuilt hook theme to use templates
+ */
+function case_study_products_filter_theme()
+{
+    $themes = array(
+         'case_study_products_filter' => array(
+            'template' => 'templates/case_study_products_filter',
+        ),
+    );
+    return $themes;
+}
+
+?>

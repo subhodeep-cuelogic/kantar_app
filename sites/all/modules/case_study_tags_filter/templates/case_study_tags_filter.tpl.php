@@ -10,11 +10,11 @@
 
 </script>
 
-
+<?php global $base_url;?>
 
 
 <div class="wrapper" align="center">
-<form name="CaseStudyFilterFrm" id="CaseStudyFilterFrm" method="get">
+<form name="CaseStudyFilterFrm" id="CaseStudyFilterFrm" method="get" action="<?php echo $base_url.'/case-studies-listing'?>">
 <select name="case_study_tags_filter" id="case_study_tags_filter" >
 <option value="All" <?php if(isset($_REQUEST['case_study_tags_filter']) &&  ($_REQUEST['case_study_tags_filter']== "All")) { echo "selected"; } ?> >All</option>
 <?php if (is_array($arrTaxonomyList) && count($arrTaxonomyList)>0) {

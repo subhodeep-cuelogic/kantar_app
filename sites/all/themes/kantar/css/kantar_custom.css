@@ -48,3 +48,14 @@ width:48px;  background:url("http://icons.iconarchive.com/icons/pixelmixer/basic
 h1.page-title {
 	border-bottom: 1px solid #FF9900;
 }
+.leader_bio {
+	clear:both;
+	padding-left:130px;
+	display:none;
+}
+.leader-row{
+	/*display:none;*/
+}
+.product-contents {
+	display:none;
+}
