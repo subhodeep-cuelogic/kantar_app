@@ -1,0 +1,169 @@
+<?php
+/**
+* Function implementing the hooks_menu()
+*/
+  
+function contact_us_menu()
+{
+    $arrItems = array();
+    $arrItems['contact-us'] = array(
+        'title'            => 'Contact Us',
+        'description'      => 'Add new user details',
+        'page callback'    => 'fnSiteContact',
+        'access callback'  => TRUE,
+    );
+
+    return $arrItems;
+}
+
+/**
+ * Function save for contact information.
+ * @param $intUserId
+ * @return string
+ */
+function fnSiteContact()
+{
+    
+	//ini_set('display_errors', '1');
+	
+	global $base_url;
+	$strProcessingAction = " ";
+   
+    #Store the back url and send to the template
+    $strBackUrl = $_SERVER['HTTP_REFERER'];
+    
+    #Initialise the contacting user details variables.
+    
+    $strUserName = "";
+    $strUserEmail = "";
+    $strUserRegion = "";
+    $strUserMessage = "";
+    $strErrorMessage = "";
+    
+    $arrContactDetailsList = getContactInfoDetails();
+    $arrRegionDetailsList = getRegionDetails();
+    
+    //echo "<pre>";print_r($arrContactDetailsList);
+    //echo "<pre>";print_r($arrRegionDetailsList);
+    
+    
+    
+
+   
+    # code for form submission of user details.
+    if (isset($_POST['btnSubmit'])) {
+        $strUserName = trim($_POST['name']);
+        $strUserEmail = trim($_POST['email']);
+        $strUserRegion = trim($_POST['region']);
+        $strUserMessage = trim($_POST['message']);
+        $subject = "Contact Us Request";
+        
+        # Validate parameters.
+        if ($strUserName == "") {
+            $strErrorMessage .= "Please enter your name <br>";
+        }elseif ($strUserEmail == "") {
+            $strErrorMessage .= "Please enter your email <br>";
+        } elseif ($strUserRegion == "") {
+            $strErrorMessage .= "Please select a Region <br>";
+        } elseif ($strUserMessage == "") {
+            $strErrorMessage .= "Please enter a Message <br>";
+        }
+
+        if ($strErrorMessage != "") {
+            drupal_set_message(t($strErrorMessage), 'error');
+            //drupal_goto('contact-us/');
+        } else {
+        	
+        	$message = $strUserMessage; // Body of your email here.
+        	$params = array(
+        			'body' => $message,
+        			'subject' => 'Website Information Request',
+        			'headers'=>'simple',
+        	);
+        	$to = "admin@kantar.com";
+        	drupal_mail('contact_us', 'send_link', $to, language_default(), $params, $strUserEmail, TRUE);
+        	drupal_set_message(t("Thanks for contacting us"), 'status');
+        }
+    }
+
+    # Include necessary JS and CSS
+    drupal_add_css(drupal_get_path('theme', 'kantar'). '/kantar_custom.css');
+
+    
+    /*Set the page title*/
+   
+    # Prepare the array for template.
+    $arrListData = array("arrContactDetailsList" => $arrContactDetailsList,
+                         "arrRegionDetailsList" => $arrRegionDetailsList,
+    					"strUserName" => $strUserName,
+                         "strUserEmail" => $strUserEmail,
+                         "strUserRegion" => $strUserRegion,
+                         "strUserMessage" => $strUserMessage,
+                         );
+
+    return theme('contact_us', $arrListData);
+}
+
+function getContactInfoDetails()
+{
+	$content_type = "contact_information";
+	$objNodes = node_load_multiple(array(), array('type' => $content_type));
+	$i=0;
+	foreach($objNodes as $objContacts) {
+		$arrContactInfo[$i]['title'] = $objContacts->title;
+		$arrContactInfo[$i]['office_address_one'] = $objContacts->field_office_address['und'][0]['value'];
+		$arrContactInfo[$i]['office_address_two'] = $objContacts->field_office_address_two['und'][0]['value'];
+		$arrContactInfo[$i]['social_tagline'] = $objContacts->field_social_tagline['und'][0]['value'];
+		$arrContactInfo[$i]['facebook_url'] = $objContacts->field_facebook_url['und'][0]['value'];
+		$arrContactInfo[$i]['linkedin_url'] = $objContacts->field_linkedin_url['und'][0]['value'];
+		$arrContactInfo[$i]['twitter_url'] = $objContacts->field_twitter_url['und'][0]['value'];
+		$arrContactInfo[$i]['google_plus_url'] = $objContacts->field_google_plus_url['und'][0]['value'];
+		$i++;
+	}
+	
+	return $arrContactInfo;
+}
+
+function getRegionDetails()
+{
+	$content_type = "region_information";
+	$objNodes = node_load_multiple(array(), array('type' => $content_type));
+	$i=0;
+	foreach($objNodes as $objRegions) {
+		$arrRegionInfo[$i]['title'] = $objRegions->title;
+		$arrRegionInfo[$i]['region_email'] = $objRegions->field_region_email['und'][0]['value'];
+		$i++;
+	}
+	
+	return $arrRegionInfo;
+	
+}
+
+function contact_us_mail($key,&$message,$params) 
+{
+
+       switch ($key) {
+             case 'send_link':
+                  $message['subject']=t($params['subject']);
+                  $message['body'][]=$params['body'];
+                  $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+       break;
+          }
+ }
+
+
+/**
+ * Call Inbuilt hook theme to use templates
+ */
+function contact_us_theme()
+{
+    $themes = array(
+         'contact_us' => array(
+            'template' => 'templates/contact_us',
+        ),
+    );
+    return $themes;
+}
+
+
+?>

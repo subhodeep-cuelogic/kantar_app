@@ -1,0 +1,5 @@
+name = contact_us
+description = This is a custom module for the the contact section of the site
+package = Contact Us
+core = 7.x
+version = 7.x - 1.x
