@@ -80,12 +80,17 @@
         <nav id="navigation" role="navigation">
           <div id="main-menu">
             <?php 
-              if (module_exists('i18n_menu')) {
+              /*if (module_exists('i18n_menu')) {
                 $main_menu_tree = i18n_menu_translated_tree(variable_get('menu_main_links_source', 'main-menu'));
               } else {
                 $main_menu_tree = menu_tree(variable_get('menu_main_links_source', 'main-menu'));
               }
-              print drupal_render($main_menu_tree);
+              print drupal_render($main_menu_tree);*/
+            $vars = array(
+            		'direction'	=> 'down',
+            		'depth'	=>	-1,
+            );
+            print theme('nice_menus_main_menu',$vars);
             ?>
           </div>
         </nav>

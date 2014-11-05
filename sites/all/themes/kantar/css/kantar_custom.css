@@ -59,3 +59,34 @@ h1.page-title {
 .product-contents {
 	display:none;
 }
+
+.clearBoth {
+	clear:both;
+}
+.contact_us_wrapper {
+	width:100%;
+}
+
+.contact_us_leftColumn {
+	float:left;
+	width:50%;
+}
+
+.contact_us_rightColumn {
+	float:right;
+	width:50%;
+}
+
+.contact_us_wrapper h2 {
+	border-bottom:1px solid #ff9900;
+	margin-bottom:30px;
+}
+
+.divBtnContact {
+	text-align:center;	
+}
+
+.btnContact{
+	background-color:#ff9900 !important;
+	background-image:none !important;
+}

@@ -7,8 +7,8 @@ function contact_us_menu()
 {
     $arrItems = array();
     $arrItems['contact-us'] = array(
-        'title'            => '',
-        'description'      => 'Site Contact',
+        'title'            => 'Contact Us',
+        'description'      => 'Add new user details',
         'page callback'    => 'fnSiteContact',
         'access callback'  => TRUE,
     );
@@ -21,8 +21,11 @@ function contact_us_menu()
  */
 function fnSiteContact()
 {
+    
+	//ini_set('display_errors', '1');
+	
 	global $base_url;
-
+	    
     #Initialise the contacting user details variables.
     
 	module_load_include('inc', 'contact_us', 'inc/contactusinfo');
@@ -46,12 +49,23 @@ function fnSiteContact()
         $strUserMessage = trim($_POST['message']);
         $strSubject = "Contact Us Request";
         
-        $strErrorMessage = fnValidateForm($strUserName, $strUserEmail, $strUserRegionEmail, $strUserMessage);
-        
+        # Validate parameters.
+        if ($strUserName == "") {
+            $strErrorMessage .= "Please enter your name <br>";
+        }elseif ($strUserEmail == "") {
+            $strErrorMessage .= "Please enter your email <br>";
+        } elseif ($strUserRegionEmail == "") {
+            $strErrorMessage .= "Please select a Region <br>";
+        } elseif ($strUserMessage == "") {
+            $strErrorMessage .= "Please enter a Message <br>";
+        }
+
         if ($strErrorMessage != "") {
             drupal_set_message(t($strErrorMessage), 'error');
+            //drupal_goto('contact-us/');
         } else {
-
+        	
+        	//$message = $strUserMessage; 
         	$params = array(
         			'body' => $strUserMessage,
         			'subject' => $strSubject,
@@ -60,6 +74,8 @@ function fnSiteContact()
         	$strToEmail = $strUserRegionEmail;
         	$strFromEmail = $strUserEmail;
         	$arrMailReturnValue = drupal_mail('contact_us', 'send_contact_request', $strToEmail, language_default(), $params, $strFromEmail, TRUE);
+        	//echo "<pre>";var_dump($arrMailReturnValue);die;
+        	//echo "<pre>";print_r($arrMailReturnValue);die;
         	if($arrMailReturnValue['result']) {
         	   	drupal_set_message(t("Thanks for contacting us"), 'status');
         	}
@@ -88,18 +104,8 @@ function fnSiteContact()
     return theme('contact_us', $arrListData);
 }
 
-/**
-* Function for validating the Contact Form input fields
-* @param string $strUserName: Contact Person Name
-* @param string $strUserEmail: Contact Person Email
-* @param string $strUserRegionEmail : Selected Region Email Address
-* @param string $strUserMessage : Contact Person Message
-* @return string
-*/
-
-function fnValidateForm($strUserName, $strUserEmail, $strUserRegionEmail, $strUserMessage)
+function __validateform()
 {
-	$strErrorMessage = "";
 	# Validate parameters.
 	if ($strUserName == "") {
 		$strErrorMessage .= "Please enter your name <br>";
@@ -110,13 +116,10 @@ function fnValidateForm($strUserName, $strUserEmail, $strUserRegionEmail, $strUs
 	} elseif ($strUserMessage == "") {
 		$strErrorMessage .= "Please enter a Message <br>";
 	}
-	
-	return $strErrorMessage;
 }
 
-/**
- * Overriding hook_mail to send email
- */
+
+
 function contact_us_mail($key,&$message,$params) 
 {
 
