@@ -43,10 +43,11 @@
 	        </div>
 	        <div class="form-item">
 	            <label for="region">REGION<span class="form-required" title="This field is required">*</span></label>
+	            <br>
 	            <select name="region" id="region">
 	            	<option value="">Select Region</option>
 	            	<?php foreach($arrRegionDetailsList as $arrRegionDetails) { ?>
-	            	<option value="<?php echo $arrRegionDetails['region_email'];?>" <?php if(isset($strUserRegionEmail) && ($strUserRegionEmail == $arrRegionDetails['region_email'])) { echo "selected"; } ?>><?php echo $arrRegionDetails['title'];?></option>
+	            	<option value="<?php echo $arrRegionDetails['nid'];?>" <?php if(isset($strUserRegionId) && ($strUserRegionId == $arrRegionDetails['nid'])) { echo "selected"; } ?>><?php echo $arrRegionDetails['title'];?></option>
 	            	<?php } ?>
 	            </select>
 			</div>

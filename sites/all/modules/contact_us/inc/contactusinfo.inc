@@ -10,8 +10,10 @@ class ContactUsInfo {
 	 */
 	public function getContactInfoDetails()
 	{
-		$content_type = "contact_information";
-		$objNodes = node_load_multiple(array(), array('type' => $content_type));
+		$strContentType = "contact_information";
+		
+		$objNodes = node_load_multiple(array(), array('type' => $strContentType));
+		
 		$i=0;
 		foreach($objNodes as $objContacts) {
 			$arrContactInfo[$i]['title'] = $objContacts->title;
@@ -34,16 +36,45 @@ class ContactUsInfo {
 	 */
 	public function getRegionDetails()
 	{
-		$content_type = "region_information";
-		$objNodes = node_load_multiple(array(), array('type' => $content_type));
+		$strContentType = "region_information";
+		
+		$objNodes = node_load_multiple(array(), array('type' => $strContentType));
+		
 		$i=0;
 		foreach($objNodes as $objRegions) {
+			$arrRegionInfo[$i]['nid'] = $objRegions->nid;
 			$arrRegionInfo[$i]['title'] = $objRegions->title;
 			$arrRegionInfo[$i]['region_email'] = $objRegions->field_region_email['und'][0]['value'];
 			$i++;
 		}
 		
 		return $arrRegionInfo;	
+	}
+	
+	/**
+	 * Function for validating the Contact Form input fields
+	 * @param string $strUserName: Contact Person Name
+	 * @param string $strUserEmail: Contact Person Email
+	 * @param string $strUserRegionEmail : Selected Region Email Address
+	 * @param string $strUserMessage : Contact Person Message
+	 * @return string
+	 */
+	
+	public function fnValidateForm($strUserName, $strUserEmail, $strUserRegionEmail, $strUserMessage)
+	{
+		$strErrorMessage = "";
+		# Validate parameters.
+		if ($strUserName == "") {
+			$strErrorMessage .= "Please enter your name <br>";
+		}elseif ($strUserEmail == "") {
+			$strErrorMessage .= "Please enter your email <br>";
+		} elseif ($strUserRegionEmail == "") {
+			$strErrorMessage .= "Please select a Region <br>";
+		} elseif ($strUserMessage == "") {
+			$strErrorMessage .= "Please enter a Message <br>";
+		}
+	
+		return $strErrorMessage;
 	}
 	
 }

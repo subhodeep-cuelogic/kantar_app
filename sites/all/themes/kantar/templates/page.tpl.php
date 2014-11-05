@@ -65,7 +65,13 @@
  */
 ?>
 <div id="page">
+	
   <header id="masthead" class="site-header container" role="banner">
+  <?php if($page['content_manager_menu']) : ?>
+  	<div class="row contentMenu">
+  		<?php print render($page['content_manager_menu']); ?>
+  	</div>
+  <?php endif;?>	
     <div class="row">
       <div id="logo" class="site-branding col-sm-6 logo_width">
         <?php if ($logo): ?><div id="site-logo"><a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
@@ -113,7 +119,7 @@
       </div>
     </div>
   <?php endif; ?>
-<?php print render($page['custom']); ?>
+
 
 
     <div id="main-content">

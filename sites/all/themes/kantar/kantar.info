@@ -21,5 +21,6 @@ regions[footer_first]   = First Bottom
 regions[footer_second]  = Second Bottom
 regions[footer_third]   = Third Bottom
 regions[footer_fourth]  = Fourth Bottom
+regions[content_manager_menu]  = Content Manager Menu
 
 

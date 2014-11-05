@@ -30,36 +30,40 @@ function fnSiteContact()
     
     $strUserName = "";
     $strUserEmail = "";
-    $strUserRegionEmail = "";
+    $strUserRegionId = "";
     $strUserMessage = "";
     $strErrorMessage = "";
     
     $arrContactDetailsList = $objContact->getContactInfoDetails();
-    $arrRegionDetailsList = $objContact->getRegionDetails();
     
+    $arrRegionDetailsList = $objContact->getRegionDetails();
    
     # code for contact form details.
     if (isset($_POST['btnSubmit'])) {
         $strUserName = trim($_POST['name']);
         $strUserEmail = trim($_POST['email']);
-        $strUserRegionEmail = trim($_POST['region']);
+        $strUserRegionId = trim($_POST['region']);
         $strUserMessage = trim($_POST['message']);
         $strSubject = "Contact Us Request";
         
-        $strErrorMessage = fnValidateForm($strUserName, $strUserEmail, $strUserRegionEmail, $strUserMessage);
+        $strErrorMessage = $objContact->fnValidateForm($strUserName, $strUserEmail, $strUserRegionId, $strUserMessage);
         
         if ($strErrorMessage != "") {
             drupal_set_message(t($strErrorMessage), 'error');
         } else {
 
-        	$params = array(
+        	$arrParams = array(
         			'body' => $strUserMessage,
         			'subject' => $strSubject,
         			'headers'=>'simple',
         	);
+        	
+        	$objRegionNode = node_load($strUserRegionId);
+        	$strUserRegionEmail = $objRegionNode->field_region_email['und'][0]['value'];
+        	
         	$strToEmail = $strUserRegionEmail;
         	$strFromEmail = $strUserEmail;
-        	$arrMailReturnValue = drupal_mail('contact_us', 'send_contact_request', $strToEmail, language_default(), $params, $strFromEmail, TRUE);
+        	$arrMailReturnValue = drupal_mail('contact_us', 'send_contact_request', $strToEmail, language_default(), $arrParams, $strFromEmail, TRUE);
         	if($arrMailReturnValue['result']) {
         	   	drupal_set_message(t("Thanks for contacting us"), 'status');
         	}
@@ -72,59 +76,32 @@ function fnSiteContact()
 
     # Include necessary JS and CSS
     drupal_add_css(drupal_get_path('theme', 'kantar'). '/kantar_custom.css');
-
-    
-    /*Set the page title*/
    
     # Prepare the array for template.
     $arrListData = array("arrContactDetailsList" => $arrContactDetailsList,
                          "arrRegionDetailsList" => $arrRegionDetailsList,
     					"strUserName" => $strUserName,
                          "strUserEmail" => $strUserEmail,
-                         "strUserRegionEmail" => $strUserRegionEmail,
+                         "strUserRegionId" => $strUserRegionId,
                          "strUserMessage" => $strUserMessage,
                          );
 
     return theme('contact_us', $arrListData);
 }
 
-/**
-* Function for validating the Contact Form input fields
-* @param string $strUserName: Contact Person Name
-* @param string $strUserEmail: Contact Person Email
-* @param string $strUserRegionEmail : Selected Region Email Address
-* @param string $strUserMessage : Contact Person Message
-* @return string
-*/
 
-function fnValidateForm($strUserName, $strUserEmail, $strUserRegionEmail, $strUserMessage)
-{
-	$strErrorMessage = "";
-	# Validate parameters.
-	if ($strUserName == "") {
-		$strErrorMessage .= "Please enter your name <br>";
-	}elseif ($strUserEmail == "") {
-		$strErrorMessage .= "Please enter your email <br>";
-	} elseif ($strUserRegionEmail == "") {
-		$strErrorMessage .= "Please select a Region <br>";
-	} elseif ($strUserMessage == "") {
-		$strErrorMessage .= "Please enter a Message <br>";
-	}
-	
-	return $strErrorMessage;
-}
 
 /**
  * Overriding hook_mail to send email
  */
-function contact_us_mail($key,&$message,$params) 
+function contact_us_mail($strKey,&$arrMessage,$arrParams) 
 {
 
-       switch ($key) {
+       switch ($strKey) {
              case 'send_contact_request':
-                  $message['subject']=t($params['subject']);
-                  $message['body'][]=$params['body'];
-                  $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+                  $arrMessage['subject']=t($arrParams['subject']);
+                  $arrMessage['body'][]=$arrParams['body'];
+                  $arrMessage['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
        break;
           }
  }

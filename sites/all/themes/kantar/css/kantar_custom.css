@@ -90,3 +90,16 @@ h1.page-title {
 	background-color:#ff9900 !important;
 	background-image:none !important;
 }
+.contentMenu {
+	margin: 0 auto !important;
+	text-align:center;
+	width:100%;
+	background-color:#000;
+	float:none;
+}
+.contentMenu li{
+	padding-left:20px !important;
+	padding-right:20px !important;
+
+	
+}
