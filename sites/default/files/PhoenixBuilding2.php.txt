@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>Phoenix Building 2, </title>
+<meta NAME="description" CONTENT="photos">
+<meta NAME="keywords" CONTENT="hartford,connecticut,building,architecture,modern,office building,constitution plaza,images,photos,pictures,stock,photography">
+</head>
+<body bgcolor=#000000 text=#FFCC33 link=#FFCC33 vlink=#FFCC33>
+<table><tr><td align=right valign=top width=150>
+<table>
+<tr><td align=right><font size=-1>Hartford</font></td></tr>
+<tr><td align=right><font size=-1>19 of 22 photos</font></td></tr>
+<tr><td align=right><font size=-2>&nbsp;</font></td></tr>
+<tr><td align=right><table border=1 cellpadding=2 cellspacing=0 height=50>
+<tr><td align=right><font size=-2>Phoenix Building 2<br></font></td></tr>
+</table></td></tr>
+<tr><td align=right><font size=-2>&nbsp;</font></td></tr>
+<tr><td align=right height=35><font size=-2><b>Location:</b> Hartford, CT</font></td></tr>
+<tr><td align=right height=35><font size=-2><b>Format:</b> Digital 12.8 MP</font></td></tr>
+<tr><td align=right valign=top>&copy;<font size=-1> Ronald C Saari</font></td></tr>
+<tr><td align=right><font size=-1>&nbsp;</font></td></tr>
+<tr><td align=right><a href="../../stockImages/hartford/PhoenixBuilding1.php"><img src="../../images/previous.gif" border=0></a></tr></td><tr><td align=right><a href="../../stockImages/hartford/ColtArmoryDome.php"><img src="../../images/next.gif" border=0></a></td></tr>
+<tr><td align=right><a href="javascript: window.close();"><img src="../../images/close.gif" border=0></a></td></tr>
+<tr><td align=right><a href="../../stockImages/buyAPrint.php?gallery=hartford&image=PhoenixBuilding2.jpg&noclose="><font size=-2>Buy A Print</font><a></td></tr>
+<tr><td align=right><a href="../../stockImages/requestimage.php"><font size=-2>Request Licensing</font><a></td></tr>
+<tr><td align=right><a href="../../stockImages/emailImage.php?gallery=hartford&image=PhoenixBuilding2.jpg&noclose="><font size=-2>Email This Photo</font><a></td></tr>
+</tr></table>
+</td>
+<td valign=top><img src="../../stockImages/hartford/PhoenixBuilding2.jpg" alt="Phoenix Building 2"><br>
+<font size=-2><b>Keywords:</b> hartford,connecticut,building,architecture,modern,office building,constitution plaza,images,image,photo,photos,picture,pictures,stock,photography</font>
+</td></tr></table>
+</body></html>
+
